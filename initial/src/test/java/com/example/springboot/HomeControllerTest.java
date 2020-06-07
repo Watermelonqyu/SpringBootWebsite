@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 public class HomeControllerTest {
 
 	@Autowired
-	private MockMvc mvc;
+	private transient MockMvc mvc;
 
 	@Test
 	public void getHello() throws Exception {
