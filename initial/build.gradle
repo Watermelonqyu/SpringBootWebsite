@@ -1,0 +1,65 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.2.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+	id 'pmd'
+	id "org.myire.quill.cpd" version "2.4"
+	id "com.github.spotbugs" version "4.3.0"
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+ext {
+    springVersion = '5.2.6.RELEASE'
+	springSecurityVersion = '5.2.5.RELEASE'
+	hibernateVersion = '5.4.17.Final'
+	c3p0Version = '0.9.5.5'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	implementation 'org.springframework:spring-tx:$springVersion'
+	implementation 'org.springframework:spring-spring-mvc:$springVersion'
+	implementation 'org.springframework.security:spring-security-config:$springSecurityVersion' {
+		exclude group: 'org.springframework', module: 'spring-asm'
+	}
+	implementation 'org.springframework.security:spring-security-web:$springSecurityVersion'
+	implementation 'org.springframework.security:spring-security-taglibs:$springSecurityVersion'
+
+	implementation 'javax.servlet:jstl:1.2'
+	implementation 'javax.servlet:javax.servlet-api:4.0.1'
+	implementation 'org.apache.tiles:tiles-extras:3.0.8' {
+		exclude group: 'org.slf4j', module: 'jcl-over-slf4j'
+	}
+
+	implementation 'org.hibernate:hibernate-core:$hibernateVersion'
+	implementation 'org.hibernate:hibernate-c3p0:$hibernateVersion'
+
+	implementation 'com.mchange:c3p0:$c3p0Version'
+	implementation 'mysql:mysql-connector-java:8.0.20'
+
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
+
+pmd {
+    consoleOutput = true
+    toolVersion = "6.21.0"
+    rulePriority = 5
+    ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
+}
